@@ -62,23 +62,6 @@
             padding: 20px;
             background: rgba(50, 50, 70, 0.8);
         }
-        #history-btn {
-            font-size: 1.2rem;
-            padding: 15px;
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(45deg, #8b5a2b, #4e342e);
-            color: #fff;
-            border: none;
-            border-radius: 50%;
-            cursor: pointer;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-            margin-top: 20px;
-        }
-        #history-btn:hover {
-            transform: scale(1.1);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
-        }
         #back-btn-container {
             text-align: center;
             margin-top: 20px;
@@ -171,13 +154,23 @@
                 <div class="image-section">
                     <img id="role-image" src="" alt="Role Image">
                     <h1 id="welcome-message" class="text-2xl font-bold mt-4">WELCOME ADVENTURE AWAITS</h1>
-                    <p><strong>Name:</strong> <span id="player-name"></span></p>
-                    <p><strong>Level:</strong> <span id="player-level"></span></p>
-                    <p><strong>Race:</strong> <span id="player-race"></span></p>
-                    <p><strong>Guild:</strong> <span id="player-guild"></span></p>
-                    <p><strong>Role:</strong> <span id="player-role"></span></p>
-                    <p><strong>Region:</strong> <span id="player-region"></span></p>
-                    <button id="history-btn">?</button>
+                    <hr class="my-2">
+                    <hr class="my-2">
+                    <div class = "flex flex-col justify-between items-center gap-20">
+                        <div>
+                            <p><strong>Name:</strong> <span id="player-name"></span></p>
+                            <p><strong>Level:</strong> <span id="player-level"></span></p>
+                            <p><strong>Race:</strong> <span id="player-race"></span></p>
+                            <p><strong>Guild:</strong> <span id="player-guild"></span></p>
+                            <p><strong>Role:</strong> <span id="player-role"></span></p>
+                            <p><strong>Region:</strong> <span id="player-region"></span></p>
+                        </div>
+                        
+                        <button id="history-btn" 
+                            class="bg-gradient-to-r from-gray-800 via-indigo-900 to-black hover:from-indigo-800 hover:to-gray-700 text-yellow-300 font-bold py-3 px-8 rounded-full shadow-lg hover:shadow-2xl transform transition-transform hover:scale-110 border-2 border-yellow-400">
+                            Descendant's Fate
+                        </button>
+                    </div>
                 </div>
                 <!-- Detailed Stats Section -->
                 <div class="details-section">
@@ -192,6 +185,9 @@
                     <hr class="my-2">
                     <p><strong>Titles:</strong></p>
                     <ul id="player-titles"></ul>
+                    <hr class="my-2">
+                    <p><strong>Description:</strong></p>
+                    <ul id="player-desc"></ul>
                 </div>
             </div>
         </div>
@@ -280,51 +276,61 @@
 
         const playerSkills = document.getElementById('player-skills');
         const playerTitles = document.getElementById('player-titles');
+        const playerDesc = document.getElementById('player-desc');
 
         const roles = {
             Warrior: {
                 image: 'warrior.jpg',
                 stats: { strength: [80, 100], mana: [10, 30], health: [90, 120], agility: [40, 60], power: [60, 80] },
                 skills: ["Sword Mastery (Rank A)", "Shield Block (Rank B)", "Battle Cry (Rank A)"],
-                titles: ["Braveheart", "Defender"]
+                titles: ["Braveheart", "Defender"],
+                desc: "The 3rd descendant of Nawamreh, the Warrior is a living symbol of valor and strength. Known as the Vanguard of the Realm, they lead the charge in battles, their war cries striking fear into the hearts of enemies and bolstering the courage of allies. Each strike of their blade is a testament to their dedication, and their unbreakable will turns even the darkest tides of war. The Warrior is the embodiment of unwavering discipline, sacrificing personal safety for the greater good. Through fiery battles, they have earned their place as the shield and sword of Nawamreh, always ready to defend its borders against any threat."
             },
             Mage: {
                 image: 'mage.jpg',
                 stats: { strength: [20, 40], mana: [90, 120], health: [50, 70], agility: [30, 50], power: [80, 100] },
                 skills: ["Fireball (Rank S)", "Arcane Blast (Rank A)", "Mana Shield (Rank B)"],
-                titles: ["Spellweaver", "Archmage"]
+                titles: ["Spellweaver", "Archmage"],
+                desc: "The 4th descendant of Nawamreh, the Mage is a master of arcane arts, drawing on the boundless energy of the realm to manipulate reality itself. Armed with forbidden knowledge and ancient scrolls, they wield the power to summon storms, conjure fire, and bend time. The Mage's wisdom is as deep as the libraries they protect, their every spell a piece of the realm's history brought to life. They are both scholar and warrior, standing at the crossroads of knowledge and power. In times of peace, they guide Nawamreh's scholars; in times of war, they are the catalysts of victory, leaving enemies in awe of their sheer magical prowess."
             },
             Assassin: {
                 image: 'assassin.jpg',
                 stats: { strength: [60, 80], mana: [20, 40], health: [60, 80], agility: [80, 100], power: [50, 70] },
                 skills: ["Stealth (Rank S)", "Backstab (Rank S)", "Poison Blade (Rank A)"],
-                titles: ["Shadow", "Silent Killer"]
+                titles: ["Shadow", "Silent Killer"],
+                desc: "The 2nd descendant of Nawamreh, the Assassin is an enigmatic figure shrouded in mystery. Known as the Hand of Shadows, they are the silent protectors of the realm, striking swiftly and vanishing before their enemies can react. Masters of disguise and infiltration, they walk unseen in the most guarded of places, their blades delivering death with surgical precision. Every mission they undertake is a calculated dance of death, and their loyalty to Nawamreh is matched only by their skill. While their methods are veiled in secrecy, their results are undeniable—Nawamreh sleeps soundly because of the threats that never see the light of day."
             },
             Cleric: {
                 image: 'cleric.jpg',
                 stats: { strength: [30, 50], mana: [70, 90], health: [70, 90], agility: [20, 40], power: [60, 80] },
                 skills: ["Heal (Rank A)", "Blessing (Rank B)", "Holy Light (Rank S)"],
-                titles: ["Healer", "Lightbringer"]
+                titles: ["Healer", "Lightbringer"],
+                desc: "The 5th descendant of Nawamreh, the Cleric is a beacon of hope and a vessel of divine grace. Revered for their unwavering faith, they channel celestial energy to heal the wounded and banish the forces of darkness. The Cleric's staff is not merely a tool—it is an extension of their soul, glowing with the light of Nawamreh itself. Their presence on the battlefield is transformative, turning despair into hope and chaos into harmony. Beyond healing, they are spiritual leaders, guiding the people of Nawamreh toward peace and unity. The Cleric is a reminder that even in the direst times, light will always prevail."
             },
             Archer: {
                 image: 'archer.jpg',
                 stats: { strength: [50, 70], mana: [20, 40], health: [60, 80], agility: [70, 90], power: [60, 80] },
                 skills: ["Arrow Volley (Rank A)", "Piercing Shot (Rank B)", "Camouflage (Rank A)"],
-                titles: ["Sharpshooter", "Forest Guardian"]
+                titles: ["Sharpshooter", "Forest Guardian"],
+                desc: "The 6th descendant of Nawamreh, the Archer is the silent protector of the realm’s sacred forests. With unmatched precision and an unyielding bond to nature, they are a force of balance and preservation. Every arrow they release finds its mark, guided by their keen instincts and unshakable focus. The Archer is more than a marksman—they are a guardian of life itself, standing as a sentinel against any who dare threaten the harmony of Nawamreh. Their agility and adaptability make them a formidable foe, and their alliance with the creatures of the forest ensures they are never alone in their defense of the realm."
             },
             Paladin: {
                 image: 'paladin.jpg',
                 stats: { strength: [70, 90], mana: [30, 50], health: [80, 100], agility: [40, 60], power: [70, 90] },
                 skills: ["Divine Strike (Rank S)", "Holy Shield (Rank A)", "Judgment (Rank B)"],
-                titles: ["Crusader", "Protector"]
+                titles: ["Crusader", "Protector"],
+                desc: "The 1st descendant of Nawamreh, the Paladin is a paragon of faith and strength. As the Shield of the Realm, they stand unwavering against the tides of darkness, wielding divine power to protect the innocent and banish evil. Their armor, etched with sacred symbols, radiates a holy light that inspires allies and terrifies foes. The Paladin’s dedication to justice is absolute, and their resolve unbreakable, making them the embodiment of Nawamreh’s guiding principles. Wherever they tread, hope follows, and the light of Nawamreh shines ever brighter."
             },
             Bard: {
                 image: 'bard.jpg',
                 stats: { strength: [30, 50], mana: [50, 70], health: [50, 70], agility: [60, 80], power: [40, 60] },
                 skills: ["Inspiring Song (Rank A)", "Melodic Strike (Rank B)", "Hymn of Courage (Rank S)"],
-                titles: ["Minstrel", "Soul Singer"]
+                titles: ["Minstrel", "Soul Singer"],
+                desc: "The 7th descendant of Nawamreh, the Bard is the heart of the realm’s spirit. Through their melodies, they breathe life into weary hearts and inspire greatness in those who hear their songs. Each note they play is imbued with magic, turning the tide of battles and uniting the people of Nawamreh under a banner of hope. The Bard is more than an entertainer—they are the chroniclers of history, ensuring that the stories of the realm endure through the ages. Their music transcends words, touching the very soul of Nawamreh, and ensuring its legacy is never forgotten."
             }
         };
+        
+        
 
         loreBtn.addEventListener('click', () => {
             loreModal.classList.remove('hidden');
@@ -374,9 +380,10 @@
             roleImage.src = role.image;
 
             playerLevel.textContent = getRandomInt(1, 100);
-            playerRace.textContent = randomize(["Human", "Elf", "Orc", "Beast", "Dwarf"]);
+            playerRace.textContent = randomize(["Human"])
             playerGuild.textContent = randomize(["RHODES", "Azure Legion", "Golden Fang", "Moonlight Order"]);
             playerRegion.textContent = randomize(["Liberia", "Eldoria", "Draconis", "Sylvaria"]);
+            
 
             playerStrength.textContent = getRandomInt(...role.stats.strength);
             playerMana.textContent = getRandomInt(...role.stats.mana);
@@ -386,6 +393,18 @@
 
             playerSkills.innerHTML = role.skills.map(skill => `<li>${skill}</li>`).join('');
             playerTitles.innerHTML = role.titles.map(title => `<li>${title}</li>`).join('');
+
+            function styleDesc(desc) {
+                // Match "The" followed by ordinal numbers (1st, 2nd, 3rd, etc.) and capture everything before and including the number
+                const formattedDesc = desc.replace(/(The\b.*?\b\d+(?:st|nd|rd|th)?\b)/gi, '<span style="font-size: 1.5em; font-weight: bold; color: yellow;">$1</span>');
+                
+                // Wrap the description in a div with alignment and spacing styles
+                return `<div style="text-align: justify; line-height: 1.8; padding: 1em; background-color: rgba(0, 0, 0, 0.7); border-radius: 10px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);">${formattedDesc}</div>`;
+            }
+            
+            // Example usage:
+            playerDesc.innerHTML = styleDesc(role.desc);
+            
 
             showPortal(() => {
                 mainPage.classList.add('hidden');
