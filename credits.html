@@ -29,6 +29,36 @@
       text-shadow: 0 4px 8px rgba(0, 0, 0, 0.8);
     }
 
+    /* Popup Overlay */
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.8);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+    .overlay.hidden {
+      display: none;
+    }
+
+    .overlay-content {
+      background: rgba(40, 40, 40, 0.9);
+      border: 2px solid #d4af37;
+      border-radius: 16px;
+      padding: 2rem;
+      max-width: 400px;
+      text-align: center;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
+    }
+    .overlay h2 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      font-weight: bold;
+    }
+
+    /* Button hover transitions */
     button {
       transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
     }
@@ -52,6 +82,32 @@
   </style>
 </head>
 <body>
+
+  <!-- POPUP OVERLAY: To enable music -->
+  <div id="music-overlay" class="overlay">
+    <div class="overlay-content text-yellow-300">
+      <h2 class="text-xl font-bold mb-4">This is the end credit :D</h2>
+      <p class="mb-6">This Credit, is for you, and just you.</p>
+      <button 
+        id="enable-music-btn"
+        class="
+          bg-yellow-500 
+          hover:bg-yellow-600 
+          text-black 
+          font-bold 
+          py-2 
+          px-6 
+          rounded-lg 
+          shadow-md 
+          transition-transform 
+          transform 
+          hover:scale-105
+        "
+      >
+        Enable Music
+      </button>
+    </div>
+  </div>
 
   <!-- Main Container for Credits Content -->
   <div class="main-container space-y-6 text-yellow-300">
@@ -91,30 +147,14 @@
       <p class="text-center italic text-yellow-400">
         Special thanks to my girlfriend, myself, and God for inspiring the roles and the characters that bring Nawamreh to life.
       </p>
+      <br>
+      <p class="text-center">
+        If you want to come back here, type "credit" in the gate :D
+      </p>
     </div>
 
-    <!-- AUDIO CONTROLS -->
+    <!-- BACK BUTTON -->
     <div class="flex justify-center items-center gap-4 mt-4">
-      <!-- Play/Pause Button -->
-      <button 
-        id="music-toggle-btn"
-        class="
-          bg-purple-600 
-          hover:bg-purple-700 
-          text-white 
-          font-bold 
-          py-2 
-          px-6 
-          rounded-lg 
-          shadow-md 
-          transition-transform 
-          transform 
-          hover:scale-105
-        "
-      >
-        Play Music
-      </button>
-
       <!-- Back Button -->
       <button 
         onclick="goBack()"
@@ -141,32 +181,26 @@
   <audio id="credits-music" src="yungkai.mp3" loop></audio>
 
   <script>
+    // Hide the popup overlay & play music
+    function enableMusic() {
+      const musicOverlay = document.getElementById('music-overlay');
+      const creditsMusic = document.getElementById('credits-music');
+      musicOverlay.classList.add('hidden'); // hide overlay
+
+      // Attempt to play music
+      creditsMusic.play().catch(err => {
+        console.error('Music playback failed:', err);
+      });
+    }
+
     function goBack() {
-      // Optional: If you want a "Back" button that goes to a previous page or main index:
+      // If you want a "Back" button that goes to a previous page or main index:
       window.history.back();
     }
 
-    // Toggle music playback
-    const musicToggleBtn = document.getElementById('music-toggle-btn');
-    const creditsMusic   = document.getElementById('credits-music');
-
-    let isMusicPlaying = false;
-    musicToggleBtn.addEventListener('click', () => {
-      if (!isMusicPlaying) {
-        creditsMusic.play()
-          .then(() => {
-            musicToggleBtn.textContent = 'Pause Music';
-            isMusicPlaying = true;
-          })
-          .catch((err) => {
-            console.error('Music playback failed:', err);
-          });
-      } else {
-        creditsMusic.pause();
-        musicToggleBtn.textContent = 'Play Music';
-        isMusicPlaying = false;
-      }
-    });
+    // When user clicks "Enable Music"
+    const enableMusicBtn = document.getElementById('enable-music-btn');
+    enableMusicBtn.addEventListener('click', enableMusic);
   </script>
 </body>
 </html>
