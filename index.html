@@ -155,6 +155,31 @@
                 box-shadow: 0 0 20px rgba(255, 255, 255, 0.8), 0 0 40px rgba(255, 0, 255, 0.4);
             }
         }
+
+        #main-page {
+            background-image: url('door.jpg'); /* Replace with the path to your door image */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            height: 70vh; /* Adjusted height */
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* Add a dimmed overlay */
+        #main-page::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.8); /* Semi-transparent black */
+            z-index: 1; /* Ensures it appears above the image */
+        }
+        
+        /* Ensure the content stays above the overlay */
+        #main-page > * {
+            position: relative;
+            z-index: 2;
+        }
     </style>
 </head>
 <body class="min-h-screen flex flex-col justify-center items-center">
@@ -164,37 +189,45 @@
 
     <div class="main-container">
         <!-- Main Page -->
-        <div id="main-page" class="text-center space-y-10 py-10 bg-gradient-to-b from-gray-900 via-black to-gray-800 rounded-lg shadow-2xl">
-            <!-- Page Title -->
-            <h1 class="text-6xl font-bold text-yellow-300 drop-shadow-[0_0_15px_rgba(255,223,0,0.8)]">
-                Welcome to the Realm of Nawamreh
-            </h1>
-            <p class="text-lg italic text-yellow-100">
-                An adventure of legends and mysteries awaits you...
-            </p>
+        <div id="main-page" class="text-center space-y-10 py-10 bg-gradient-to-b from-gray-900 via-black to-gray-800 rounded-lg shadow-2xl bg-cover bg-center relative h-screen">
+            <!-- Dimmed Background Overlay -->
+            <div class="absolute inset-0 bg-black bg-opacity-50 z-0"></div>
         
-            <!-- Name Input Section -->
-            <div class="mt-10 space-y-6">
-                <label for="name-input" class="block text-lg font-medium text-yellow-200 tracking-wide">
-                    Enter the Name of Prophecy
-                </label>
-                <input type="text" id="name-input" placeholder="...whisper your name"
-                    class="text-black text-center px-8 py-4 rounded-full focus:ring-4 focus:ring-yellow-400 focus:outline-none border-2 border-yellow-500 placeholder-yellow-600 shadow-xl transition-all duration-300 transform hover:scale-105">
-            </div>
+            <!-- Content Section -->
+            <div class="relative z-10">
+                <!-- Page Title -->
+                <h1 class="text-6xl font-bold text-yellow-300 drop-shadow-[0_0_15px_rgba(255,223,0,0.8)]">
+                    Welcome to the Realm of Nawamreh
+                </h1>
+                <p class="text-lg italic text-yellow-100">
+                    An adventure of legends and mysteries awaits you...
+                </p>
         
-            <!-- Buttons Section -->
-            <div class="mt-10 flex flex-col space-y-6 items-center">
-                <!-- Start Button -->
-                <button id="start-btn"
-                    class="bg-gradient-to-r from-yellow-500 via-orange-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700 text-black font-bold py-4 px-12 rounded-full shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-110">
-                    Start Your Journey
-                </button>
+                <!-- Name Input Section -->
+                <div class="mt-10 space-y-6">
+                    <label for="name-input" class="block text-lg font-medium text-yellow-200 tracking-wide">
+                        Enter the Name of Prophecy
+                    </label>
+                    <input type="text" id="name-input" placeholder="...whisper your name"
+                        class="text-black text-center px-8 py-4 rounded-full focus:ring-4 focus:ring-yellow-400 focus:outline-none border-2 border-yellow-500 placeholder-yellow-600 shadow-xl transition-all duration-300 transform hover:scale-105">
+                </div>
         
-                <!-- Lore Button -->
-                <button id="lore-btn"
-                    class="bg-gradient-to-r from-gray-700 via-gray-800 to-black text-yellow-400 font-semibold py-4 px-12 rounded-full shadow-lg opacity-60 hover:opacity-100 hover:text-yellow-300 hover:shadow-2xl transition-all duration-500 transform hover:scale-110 tracking-widest">
-                    I Am the Guide
-                </button>
+                <!-- Buttons Section -->
+                <div class="mt-10 flex flex-col space-y-6 items-center">
+                    <!-- Start Button -->
+                    <button id="start-btn"
+                        class="bg-yellow-500 text-black font-bold py-4 px-12 rounded-full shadow-lg border-2 border-yellow-600 hover:bg-orange-500 hover:text-yellow-100 hover:shadow-[0_0_20px_rgba(255,165,0,0.8)] transition-all duration-300 transform hover:scale-110">
+                        Start Your Journey
+                    </button>
+
+        
+                    <!-- Lore Button -->
+                    <button id="lore-btn"
+                        class="bg-black text-yellow-400 font-semibold py-4 px-12 rounded-full shadow-lg border-2 border-yellow-400 hover:bg-yellow-400 hover:text-black hover:shadow-[0_0_20px_rgba(255,223,0,0.8)] transition-all duration-500 transform hover:scale-110 tracking-widest">
+                        I Am the Guide
+                    </button>
+
+                </div>
             </div>
         </div>
         
@@ -359,7 +392,7 @@
                 stats: { strength: [80, 100], mana: [10, 30], health: [90, 120], agility: [40, 60], power: [60, 80] },
                 skills: ["Blade Whirlwind (Rank S)", "Iron Fortress (Rank A)", "Titan's Grip (Rank B)", "War Cry (Rank S)"],
                 titles: ["Braveheart", "Iron Vanguard", "Titan of the Battlefield"],
-                desc: "The 3rd descendant of Nawamreh, the Warrior is a living symbol of valor and strength..."
+                desc: "The 3rd descendant of Nawamreh, the Warrior is a living symbol of valor and strength. Known as the Vanguard of the Realm, they lead the charge in battles, their war cries striking fear into the hearts of enemies and bolstering the courage of allies. Each strike of their blade is a testament to their dedication, and their unbreakable will turns even the darkest tides of war. The Warrior is the embodiment of unwavering discipline, sacrificing personal safety for the greater good. Through fiery battles, they have earned their place as the shield and sword of Nawamreh, always ready to defend its borders against any threat."
             },
             
             Mage: {
@@ -367,7 +400,7 @@
                 stats: { strength: [20, 40], mana: [90, 120], health: [50, 70], agility: [30, 50], power: [80, 100] },
                 skills: ["Arcane Nova (Rank S)", "Ethereal Bind (Rank A)", "Elemental Mastery (Rank S)", "Void Rift (Rank B)"],
                 titles: ["Spellweaver", "Archmage", "Sorcerer of Eternity"],
-                desc: "The 4th descendant of Nawamreh, the Mage is a master of arcane arts..."
+                desc: "The 4th descendant of Nawamreh, the Mage is a master of arcane arts, drawing on the boundless energy of the realm to manipulate reality itself. Armed with forbidden knowledge and ancient scrolls, they wield the power to summon storms, conjure fire, and bend time. The Mage's wisdom is as deep as the libraries they protect, their every spell a piece of the realm's history brought to life. They are both scholar and warrior, standing at the crossroads of knowledge and power. In times of peace, they guide Nawamreh's scholars; in times of war, they are the catalysts of victory, leaving enemies in awe of their sheer magical prowess."
             },
             
             Assassin: {
@@ -375,7 +408,7 @@
                 stats: { strength: [60, 80], mana: [20, 40], health: [60, 80], agility: [80, 100], power: [50, 70] },
                 skills: ["Silent Step (Rank A)", "Venomous Kiss (Rank S)", "Phantom Strike (Rank B)", "Shadow Veil (Rank S)"],
                 titles: ["Hand of Shadows", "Phantom Blade", "Keeper of Secrets"],
-                desc: "The 2nd descendant of Nawamreh, the Assassin is an enigmatic figure shrouded in mystery..."
+                desc: "The 2nd descendant of Nawamreh, the Assassin is an enigmatic figure shrouded in mystery. Known as the Hand of Shadows, they are the silent protectors of the realm, striking swiftly and vanishing before their enemies can react. Masters of disguise and infiltration, they walk unseen in the most guarded of places, their blades delivering death with surgical precision. Every mission they undertake is a calculated dance of death, and their loyalty to Nawamreh is matched only by their skill. While their methods are veiled in secrecy, their results are undeniable—Nawamreh sleeps soundly because of the threats that never see the light of day."
             },
             
             Cleric: {
@@ -383,7 +416,7 @@
                 stats: { strength: [30, 50], mana: [70, 90], health: [70, 90], agility: [20, 40], power: [60, 80] },
                 skills: ["Sanctuary Blessing (Rank S)", "Healing Rain (Rank A)", "Divine Barrier (Rank S)", "Light’s Wrath (Rank B)"],
                 titles: ["Healer", "Lightbringer", "Beacon of Salvation"],
-                desc: "The 5th descendant of Nawamreh, the Cleric is a beacon of hope and a vessel of divine grace..."
+                desc: "The 5th descendant of Nawamreh, the Cleric is a beacon of hope and a vessel of divine grace. Revered for their unwavering faith, they channel celestial energy to heal the wounded and banish the forces of darkness. The Cleric's staff is not merely a tool—it is an extension of their soul, glowing with the light of Nawamreh itself. Their presence on the battlefield is transformative, turning despair into hope and chaos into harmony. Beyond healing, they are spiritual leaders, guiding the people of Nawamreh toward peace and unity. The Cleric is a reminder that even in the direst times, light will always prevail."
             },
             
             Archer: {
@@ -391,7 +424,7 @@
                 stats: { strength: [50, 70], mana: [20, 40], health: [60, 80], agility: [70, 90], power: [60, 80] },
                 skills: ["Piercing Rain (Rank S)", "Forest Shroud (Rank A)", "Hawk's Eye (Rank S)", "Binding Arrow (Rank B)"],
                 titles: ["Sharpshooter", "Forest Guardian", "Hunter of Shadows"],
-                desc: "The 6th descendant of Nawamreh, the Archer is the silent protector of the realm’s sacred forests..."
+                desc: "The 6th descendant of Nawamreh, the Archer is the silent protector of the realm’s sacred forests. With unmatched precision and an unyielding bond to nature, they are a force of balance and preservation. Every arrow they release finds its mark, guided by their keen instincts and unshakable focus. The Archer is more than a marksman—they are a guardian of life itself, standing as a sentinel against any who dare threaten the harmony of Nawamreh. Their agility and adaptability make them a formidable foe, and their alliance with the creatures of the forest ensures they are never alone in their defense of the realm."
             },
             
             Paladin: {
@@ -399,7 +432,7 @@
                 stats: { strength: [70, 90], mana: [30, 50], health: [80, 100], agility: [40, 60], power: [70, 90] },
                 skills: ["Divine Cleave (Rank S)", "Holy Aura (Rank A)", "Judgment Strike (Rank S)", "Shield of Valor (Rank B)"],
                 titles: ["Crusader", "Protector", "Guardian of Light"],
-                desc: "The 1st descendant of Nawamreh, the Paladin is a paragon of faith and strength..."
+                desc: "The 1st descendant of Nawamreh, the Paladin is a paragon of faith and strength. As the Shield of the Realm, they stand unwavering against the tides of darkness, wielding divine power to protect the innocent and banish evil. Their armor, etched with sacred symbols, radiates a holy light that inspires allies and terrifies foes. The Paladin’s dedication to justice is absolute, and their resolve unbreakable, making them the embodiment of Nawamreh’s guiding principles. Wherever they tread, hope follows, and the light of Nawamreh shines ever brighter."
             },
             
             Bard: {
@@ -407,7 +440,7 @@
                 stats: { strength: [30, 50], mana: [50, 70], health: [50, 70], agility: [60, 80], power: [40, 60] },
                 skills: ["Echoing Anthem (Rank A)", "Ballad of Fury (Rank S)", "Melody of Resolve (Rank A)", "Harmony of Souls (Rank S)"],
                 titles: ["Minstrel", "Soul Singer", "Melodic Scribe"],
-                desc: "The 7th descendant of Nawamreh, the Bard is the heart of the realm’s spirit..."
+                desc: "The 7th descendant of Nawamreh, the Bard is the heart of the realm’s spirit. Through their melodies, they breathe life into weary hearts and inspire greatness in those who hear their songs. Each note they play is imbued with magic, turning the tide of battles and uniting the people of Nawamreh under a banner of hope. The Bard is more than an entertainer—they are the chroniclers of history, ensuring that the stories of the realm endure through the ages. Their music transcends words, touching the very soul of Nawamreh, and ensuring its legacy is never forgotten."
             }            
         };
         
@@ -464,9 +497,21 @@
             }
             
             if (name.toLowerCase() === "dibalik") {
+                const fadeOutMusic = () => {
+                    let volume = statusPageMusic.volume;
+                    const interval = setInterval(() => {
+                        if (volume > 0) {
+                            volume -= 0.05;
+                            statusPageMusic.volume = Math.max(volume, 0);
+                        } else {
+                            clearInterval(interval);
+                        }
+                    }, 100);
+                };
+                fadeOutMusic();
                 // Create a new card with a video, Back button, and End button
                 mainPage.innerHTML = `
-                    <div class="text-center space-y-6 bg-gray-800 text-yellow-300 p-6 rounded-lg shadow-2xl max-w-xl mx-auto">
+                    <div class="text-center space-y-6 bg-gray-800 text-yellow-300 p-6 rounded-lg shadow-2xl max-w-xl mx-auto h-auto">
                         <h1 class="text-3xl font-bold">The Prophet, peoples, and Nawamreh acquire a greater joy.</h1>
                         <p class="text-lg italic">You have unlocked the secret of Nawamreh.</p>
                         <video controls class="mx-auto w-full rounded-lg border-4 border-yellow-500 shadow-lg">
@@ -507,57 +552,74 @@
             
             // Function to render the Credit page
             function renderCreditPage() {
-                mainPage.innerHTML = `
-                    <div class="text-center space-y-6 bg-gray-800 text-yellow-300 p-6 rounded-lg shadow-2xl max-w-2xl mx-auto">
-                        <h1 class="text-4xl font-bold">Credits</h1>
-                        <p class="text-lg italic">Thanks for reaching this page, you truly are the chosen one.</p>
-                        
-                        <div class="mt-6 space-y-4">
-                            <h2 class="text-2xl font-bold">Acknowledgements</h2>
-                            <ul class="list-disc list-inside text-left text-yellow-200">
-                                <li><strong>Storyboard & Concept:</strong> The one and only Nadekoooo</li>
-                                <li><strong>Code & Development:</strong> 3 days of sleepless dedication</li>
-                                <li><strong>Soundtrack Inspiration:</strong> Elden Ring</li>
-                                <li><strong>Inspiration:</strong> My amazing girlfriend, who inspired all the roles and characters</li>
-                            </ul>
-                        </div>
+                // Hide the main container
+                mainPage.classList.add("hidden");
             
-                        <div class="mt-6 space-y-4">
-                            <h2 class="text-2xl font-bold">Roles and Their Meanings</h2>
-                            <ul class="list-disc list-inside text-left text-yellow-200">
-                                <li><strong>Paladin:</strong> A symbol of unwavering faith and protection.</li>
-                                <li><strong>Assassin:</strong> Precision, strategy, and the quiet resolve to act in shadows.</li>
-                                <li><strong>Warrior:</strong> Commitment to strength, leadership, and courage in battle.</li>
-                                <li><strong>Mage:</strong> Wisdom, creativity, and the power of knowledge.</li>
-                                <li><strong>Cleric:</strong> Compassion, healing, and the light of hope.</li>
-                                <li><strong>Archer:</strong> Patience, accuracy, and harmony with nature.</li>
-                                <li><strong>Bard:</strong> Inspiration, storytelling, and the unity of shared experiences.</li>
-                            </ul>
-                        </div>
+                // Check if the credits container already exists
+                let existingCreditContainer = document.getElementById("credit-container");
+                if (existingCreditContainer) {
+                    existingCreditContainer.classList.remove("hidden");
+                    return;
+                }
             
-                        <p class="mt-4 text-justify">
-                            This tale of Nawamreh is a culmination of creativity, hard work, and relentless passion. 
-                            Each role reflects a unique aspect of the human spirit, and together, they form the legacy of this realm.
-                        </p>
-                        <p class="text-center italic text-yellow-400">
-                            Special thanks to my girlfriend for inspiring the roles and the characters that bring Nawamreh to life.
-                        </p>
+                // Create a new container for the credits page
+                const creditContainer = document.createElement("div");
+                creditContainer.id = "credit-container"; // Add an ID for easier targeting
+                creditContainer.className = "text-center space-y-6 bg-gray-800 text-yellow-300 p-6 rounded-lg shadow-2xl max-w-2xl mx-auto";
+                creditContainer.innerHTML = `
+                    <h1 class="text-4xl font-bold">Credits</h1>
+                    <p class="text-lg italic">Thanks for reaching this page, you truly are the chosen one.</p>
+                    
+                    <div class="mt-6 space-y-4">
+                        <h2 class="text-2xl font-bold">Acknowledgements</h2>
+                        <ul class="list-disc list-inside text-left text-yellow-200">
+                            <li><strong>Storyboard & Concept:</strong> The one and only Nadekoooo</li>
+                            <li><strong>Code & Development:</strong> 3 days of sleepless dedication</li>
+                            <li><strong>Soundtrack Inspiration:</strong> Yakusoku no Neverland & Yu Peng Chen</li>
+                            <li><strong>Inspiration:</strong> My amazing girlfriend, who inspired all the roles and characters</li>
+                        </ul>
+                    </div>
             
-                        <div class="flex justify-center gap-4 mt-4">
-                            <button id="back-btn" 
-                                class="bg-yellow-500 hover:bg-yellow-600 text-black font-bold py-2 px-6 rounded-lg shadow-md transition-transform transform hover:scale-105">
-                                Back
-                            </button>
-                        </div>
+                    <div class="mt-6 space-y-4">
+                        <h2 class="text-2xl font-bold">Roles and Their Meanings</h2>
+                        <ul class="list-disc list-inside text-left text-yellow-200">
+                            <li><strong>Paladin:</strong> A symbol of unwavering faith and protection.</li>
+                            <li><strong>Assassin:</strong> Precision, strategy, and the quiet resolve to act in shadows.</li>
+                            <li><strong>Warrior:</strong> Commitment to strength, leadership, and courage in battle.</li>
+                            <li><strong>Mage:</strong> Wisdom, creativity, and the power of knowledge.</li>
+                            <li><strong>Cleric:</strong> Compassion, healing, and the light of hope.</li>
+                            <li><strong>Archer:</strong> Patience, accuracy, and harmony with nature.</li>
+                            <li><strong>Bard:</strong> Inspiration, storytelling, and the unity of shared experiences.</li>
+                        </ul>
+                    </div>
+            
+                    <p class="mt-4 text-justify">
+                        This tale of Nawamreh is a culmination of creativity, hard work, and relentless passion. 
+                        Each role reflects a unique aspect of the author's dearest gf, and together, they form the legacy of this realm.
+                    </p>
+                    <p class="text-center italic text-yellow-400">
+                        Special thanks to my girlfriend for inspiring the roles and the characters that bring Nawamreh to life.
+                    </p>
+            
+                    <div class="flex justify-center gap-4 mt-4">
+                        <button id="back-btn-cred" 
+                            class="bg-yellow-500 hover:bg-yellow-600 text-black font-bold py-2 px-6 rounded-lg shadow-md transition-transform transform hover:scale-105">
+                            Back
+                        </button>
                     </div>
                 `;
             
-                // Add functionality for Back button in the Credits page
-                document.getElementById("back-btn").addEventListener("click", () => {
-                    location.reload(); // Reload the main page
+                // Append the new container to the body
+                document.body.appendChild(creditContainer);
+            
+                // Add functionality for the Back button
+                document.getElementById("back-btn-cred").addEventListener("click", () => {
+                    creditContainer.classList.add("hidden"); // Hide the credits container
+                    mainPage.classList.remove("hidden"); // Show the main container
+                    console.log("pantek")
                 });
             }
-            
+                
             
         
             // Proceed with rendering if the name is "louren"
@@ -674,8 +736,8 @@
         mainPageMusic.loop = true;
         statusPageMusic.loop = true;
 
-        mainPageMusic.volume = 0.1; // 50% volume
-        statusPageMusic.volume = 0.1; // 50% volume
+        mainPageMusic.volume = 0.3; // 50% volume
+        statusPageMusic.volume = 0.3; // 50% volume
 
         // State to track the current playing music
         let currentMusic = mainPageMusic;
