@@ -224,7 +224,7 @@
                     <!-- Lore Button -->
                     <button id="lore-btn"
                         class="bg-black text-yellow-400 font-semibold py-4 px-12 rounded-full shadow-lg border-2 border-yellow-400 hover:bg-yellow-400 hover:text-black hover:shadow-[0_0_20px_rgba(255,223,0,0.8)] transition-all duration-500 transform hover:scale-110 tracking-widest">
-                        I Am the Guide
+                        THIS IS THE PROPHECY
                     </button>
 
                 </div>
@@ -474,7 +474,18 @@
             const name = nameInput.value.trim();
         
             // Check if the entered name is "louren"
-            if (name.toLowerCase() !== "louren" && name.toLowerCase() !== "dibalik" && name.toLowerCase() !== "credit") {
+            if (
+                name.toLowerCase() !== "dibalik" &&
+                name.toLowerCase() !== "credit" &&
+                name.toLowerCase() !== "oren" &&
+                name.toLowerCase() !== "eunike" &&
+                name.toLowerCase() !== "cerberus" &&
+                name.toLowerCase() !== "aruchii" &&
+                name.toLowerCase() !== "cupcake" &&
+                name.toLowerCase() !== "louren" && 
+                name.toLowerCase() !== "dibalik" && 
+                name.toLowerCase() !== "credit") 
+                {
                 // Display "YOU ARE NOT WORTHY" message
                 mainPage.innerHTML = `
                     <div class="text-center space-y-6">
@@ -736,8 +747,8 @@
         mainPageMusic.loop = true;
         statusPageMusic.loop = true;
 
-        mainPageMusic.volume = 0.3; // 50% volume
-        statusPageMusic.volume = 0.3; // 50% volume
+        mainPageMusic.volume = 0.2; // 50% volume
+        statusPageMusic.volume = 0.2; // 50% volume
 
         // State to track the current playing music
         let currentMusic = mainPageMusic;
