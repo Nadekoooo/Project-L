@@ -79,6 +79,15 @@
         #back-btn:hover {
             background: #b8860b;
         }
+        .fade-out {
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+      
+        .fade-in {
+            opacity: 1;
+            transition: opacity 0.5s ease;
+        }
 
         .portal {
             position: fixed;
@@ -115,6 +124,34 @@
                 transform: rotate(360deg);
             }
         }
+
+        .fade-out {
+            opacity: 0;
+            transform: scale(0.9);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+      
+        .fade-in {
+            opacity: 1;
+            transform: scale(1);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+      
+        .mystical-border {
+            border: 2px solid transparent;
+            border-image: linear-gradient(45deg, #ffdd00, #ff9000, #d400ff, #9000ff);
+            border-image-slice: 1;
+            animation: border-glow 2s infinite alternate;
+        }
+      
+        @keyframes border-glow {
+            0% {
+                box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+            }
+            100% {
+                box-shadow: 0 0 20px rgba(255, 255, 255, 0.8), 0 0 40px rgba(255, 0, 255, 0.4);
+            }
+        }
     </style>
 </head>
 <body class="min-h-screen flex flex-col justify-center items-center">
@@ -124,27 +161,40 @@
 
     <div class="main-container">
         <!-- Main Page -->
-        <div id="main-page" class="text-center space-y-6">
-            <h1 class="text-6xl font-bold text-yellow-400 drop-shadow-lg">Welcome to the Realm of Nawamreh</h1>
-            <p class="text-lg italic text-yellow-300">An adventure of legends and mysteries awaits you...</p>
+        <div id="main-page" class="text-center space-y-10 py-10 bg-gradient-to-b from-gray-900 via-black to-gray-800 rounded-lg shadow-2xl">
+            <!-- Page Title -->
+            <h1 class="text-6xl font-bold text-yellow-300 drop-shadow-[0_0_15px_rgba(255,223,0,0.8)]">
+                Welcome to the Realm of Nawamreh
+            </h1>
+            <p class="text-lg italic text-yellow-100">
+                An adventure of legends and mysteries awaits you...
+            </p>
         
-            <div class="mt-8 space-y-4">
-                <label for="name-input" class="block text-lg font-semibold text-yellow-200">Enter the name of prophecy</label>
-                <input type="text" id="name-input" placeholder=gggiveemename.. 
-                    class="text-black text-center px-6 py-3 rounded-lg focus:ring-4 focus:ring-yellow-500 focus:outline-none border-2 border-yellow-300 placeholder-yellow-500 shadow-lg">
+            <!-- Name Input Section -->
+            <div class="mt-10 space-y-6">
+                <label for="name-input" class="block text-lg font-medium text-yellow-200 tracking-wide">
+                    Enter the Name of Prophecy
+                </label>
+                <input type="text" id="name-input" placeholder="...whisper your name"
+                    class="text-black text-center px-8 py-4 rounded-full focus:ring-4 focus:ring-yellow-400 focus:outline-none border-2 border-yellow-500 placeholder-yellow-600 shadow-xl transition-all duration-300 transform hover:scale-105">
             </div>
         
-            <div class="mt-6 flex flex-col space-y-4 items-center">
-                <button id="start-btn" 
-                    class="bg-gradient-to-r from-yellow-500 to-yellow-700 hover:from-yellow-600 hover:to-yellow-800 text-black font-bold py-3 px-8 rounded-full shadow-md hover:shadow-xl transition-transform transform hover:scale-105">
+            <!-- Buttons Section -->
+            <div class="mt-10 flex flex-col space-y-6 items-center">
+                <!-- Start Button -->
+                <button id="start-btn"
+                    class="bg-gradient-to-r from-yellow-500 via-orange-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700 text-black font-bold py-4 px-12 rounded-full shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-110">
                     Start Your Journey
                 </button>
-                <button id="lore-btn" 
-                    class="bg-gradient-to-br from-gray-800 via-gray-900 to-black hover:from-gray-700 hover:via-black hover:to-gray-800 text-yellow-200 font-bold py-3 px-8 rounded-full shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-110">
-                    ONLY THE CHOOSEN ONE CAN SEE THIS
+        
+                <!-- Lore Button -->
+                <button id="lore-btn"
+                    class="bg-gradient-to-r from-gray-700 via-gray-800 to-black text-yellow-400 font-semibold py-4 px-12 rounded-full shadow-lg opacity-60 hover:opacity-100 hover:text-yellow-300 hover:shadow-2xl transition-all duration-500 transform hover:scale-110 tracking-widest">
+                    ONLY THE CHOSEN ONE
                 </button>
             </div>
         </div>
+        
         
 
         <!-- Role Assign Page -->
@@ -358,32 +408,100 @@
 
         startBtn.addEventListener('click', () => {
             const name = nameInput.value.trim();
-
-            if (!name) {
-                welcomeMessage.textContent = "YOU ARE NOT WORTHY TO THIS LEGION";
-                playerName.textContent = "";
-                roleImage.src = "";
-                showPortal(() => {
-                    mainPage.classList.add('hidden');
-                    roleAssignPage.classList.remove('hidden');
-                    backBtnContainer.style.display = "block";
+        
+            // Check if the entered name is "louren"
+            if (name.toLowerCase() !== "louren" && name.toLowerCase() !== "dibalik") {
+                // Display "YOU ARE NOT WORTHY" message
+                mainPage.innerHTML = `
+                    <div class="text-center space-y-6">
+                        <h1 class="text-4xl font-bold text-red-500">YOU ARE NOT WORTHY TO THIS LEGION</h1>
+                        <p class="text-lg italic text-gray-300">Only the chosen can proceed...</p>
+                        <button id="back-btn" 
+                            class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-6 rounded-lg shadow-md transition-transform transform hover:scale-105">
+                            Get Back!
+                        </button>
+                    </div>
+                `;
+            
+                // Add functionality to the "Get Back!" button
+                document.getElementById('back-btn').addEventListener('click', () => {
+                    // Reload the page or reset the name input
+                    location.reload(); // This will reload the page
                 });
-                return;
+            
+                return; // Exit the function if the name is not "louren" or "dibalik"
             }
-
+            
+            if (name.toLowerCase() === "dibalik") {
+                // Create a new card with a video, Back button, and End button
+                mainPage.innerHTML = `
+                    <div class="text-center space-y-6 bg-gray-800 text-yellow-300 p-6 rounded-lg shadow-2xl max-w-xl mx-auto">
+                        <h1 class="text-3xl font-bold">The Prophet, peoples, and Nawamreh acquire a greater joy.</h1>
+                        <p class="text-lg italic">You have unlocked the secret of Nawamreh.</p>
+                        <video controls class="mx-auto w-full rounded-lg border-4 border-yellow-500 shadow-lg">
+                            <source src="ending.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <div class="flex justify-center gap-4 mt-4">
+                            <button id="back-btn" 
+                                class="bg-yellow-500 hover:bg-yellow-600 text-black font-bold py-2 px-6 rounded-lg shadow-md transition-transform transform hover:scale-105">
+                                Back
+                            </button>
+                            <button id="end-btn" 
+                                class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-6 rounded-lg shadow-md transition-transform transform hover:scale-105">
+                                End
+                            </button>
+                        </div>
+                    </div>
+                `;
+            
+                // Add functionality to the "Back" button
+                document.getElementById('back-btn').addEventListener('click', () => {
+                    // Reload the page or reset the name input
+                    location.reload(); // This will reload the page
+                });
+            
+                // Add functionality to the "End" button
+                document.getElementById('end-btn').addEventListener('click', () => {
+                    // Redirect to an end page or show a closing message
+                    mainPage.innerHTML = `
+                        <div class="text-center space-y-6">
+                            <h1 class="text-4xl font-bold text-green-500">Thank You for Discovering the Secret!</h1>
+                            <p class="text-lg italic text-gray-300">The journey continues in the heart of Nawamreh...</p>
+                        </div>
+                    `;
+                });
+            
+                return; // Exit the function as the name matched "dibalik"
+            }
+        
+            // Proceed with rendering if the name is "louren"
             const roleName = randomize(Object.keys(roles));
             const role = roles[roleName];
+        
+            welcomeMessage.innerHTML = `
+                <span style="
+                    font-size: 1.8em;
+                    font-family: 'Cinzel', serif;
+                    text-shadow: 2px 2px 8px rgba(255, 255, 0, 0.8), 0 0 10px rgba(255, 215, 0, 0.6), 0 0 15px rgba(255, 215, 0, 0.4);
+                    color: #f8de7e;
+                    letter-spacing: 2px;
+                    display: block;
+                    text-align: center;
+                    margin-top: 10px;
+                ">
+                    THE ${roleName.toUpperCase()}
+                </span>
+            `;
 
-            welcomeMessage.textContent = "WELCOME ADVENTURE AWAITS";
             playerName.textContent = name;
             playerRole.textContent = roleName;
             roleImage.src = role.image;
 
             playerLevel.textContent = getRandomInt(1, 100);
-            playerRace.textContent = randomize(["Human"])
+            playerRace.textContent = randomize(["Human"]);
             playerGuild.textContent = randomize(["RHODES", "Azure Legion", "Golden Fang", "Moonlight Order"]);
             playerRegion.textContent = randomize(["Liberia", "Eldoria", "Draconis", "Sylvaria"]);
-            
 
             playerStrength.textContent = getRandomInt(...role.stats.strength);
             playerMana.textContent = getRandomInt(...role.stats.mana);
@@ -395,24 +513,21 @@
             playerTitles.innerHTML = role.titles.map(title => `<li>${title}</li>`).join('');
 
             function styleDesc(desc) {
-                // Match "The" followed by ordinal numbers (1st, 2nd, 3rd, etc.) and capture everything before and including the number
                 const formattedDesc = desc.replace(/(The\b.*?\b\d+(?:st|nd|rd|th)?\b)/gi, '<span style="font-size: 1.5em; font-weight: bold; color: yellow;">$1</span>');
-                
-                // Wrap the description in a div with alignment and spacing styles
                 return `<div style="text-align: justify; line-height: 1.8; padding: 1em; background-color: rgba(0, 0, 0, 0.7); border-radius: 10px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);">${formattedDesc}</div>`;
             }
-            
-            // Example usage:
+
             playerDesc.innerHTML = styleDesc(role.desc);
-            
 
             showPortal(() => {
                 mainPage.classList.add('hidden');
                 roleAssignPage.classList.remove('hidden');
                 backBtnContainer.style.display = "block";
             });
-        });
 
+        });
+        
+        // "Back" button functionality
         backBtn.addEventListener('click', () => {
             showPortal(() => {
                 mainPage.classList.remove('hidden');
@@ -421,6 +536,7 @@
                 backBtnContainer.style.display = "none";
             });
         });
+        
     </script>
 </body>
 
@@ -442,7 +558,7 @@
     { 
         image: 'paladin3.jpg', 
         title : 'The Lightbringer’s Redemption',
-        text: 'The Wraith of Nihil, a monstrous embodiment of despair, rose as the final challenge. Its shrieking cries filled the sanctuary as it attempted to consume the light. The Paladin, summoning every ounce of her strength and faith, struck a decisive blow with her blade. Light erupted in every direction, vanquishing the wraith and illuminating the sanctuary in its full splendor. Holding the relic high, she restored its lost power, proving herself not only a protector of the realm but a true descendant of Nawamreh.' 
+        text: 'The Wraith of Nihil, a monstrous embodiment of despair, rose as the final challenge. Its shrieking cries filled the sanctuary as it attempted to consume the light. The Paladin, summoning every ounce of her strength and faith, struck a decisive blow with her blade. Light erupted in every direction, vanquishing the wraith and illuminating the sanctuary in its full splendor. Hol<strong>d</strong>ing the relic high, she restore<strong>d</strong> its lost power, proving herself not only a protector of the realm but a true <strong>d</strong>escendant of Nawamreh.' 
     },
 
     // Assassin stories (4-6)
@@ -459,7 +575,7 @@
     { 
         image: 'assassin3.jpg', 
         title : 'The Last Breath',
-        text: 'At the heart of the spire, she confronted the tyrant in his throne room. The battle was swift yet fierce, each strike a deadly dance. In a moment of calculated precision, she delivered the final blow, ending his reign of terror. As the tyrant fell, the dawn broke over the spire, illuminating her silhouette. Her mission complete, she stood over his throne, knowing her actions had secured Nawamreh\'s future. The legacy she protected was no longer under threat, and the shadow she wielded had served the light.' 
+        text: 'At the heart of the spire, she confronted the tyrant in his throne room. The battle was swift yet fierce, each strike a deadly dance. In a moment of calculated precision, she delivered the final blow, ending his reign of terror. As the tyrant fell, the dawn broke over the spire, illuminating her silhouette. Her mission complete, she stood over h<strong>i</strong>s throne, knowing her act<strong>i</strong>ons had secured Nawamreh\'s future. The legacy she protected was no longer under threat, and the shadow she wielded had served the l<strong>i</strong>ght.' 
     },
 
     // Warrior stories (7-9)
@@ -476,7 +592,7 @@
     { 
         image: 'warrior3.jpg', 
         title : 'The Final Stand',
-        text: 'When the marauders regrouped and returned in greater numbers, they set their sights on the Gates of Nawamreh. The Warrior, now wielding the flame-forged relic, took her place atop the city walls. She rallied the defenders with a voice that carried both resolve and hope. As the marauders clashed against the gates, she led a counterattack that turned the tide. Her blade ignited with righteous fire, scattering the invaders and securing victory for Nawamreh. Her name would forever be etched in the annals of the realm.' 
+        text: 'When the marauders regrouped and returned in greater numbers, they set their sights on the Gates of Nawamreh. The Warrior, now wielding the flame-forged relic, took her place atop the city walls. She rallied the defenders with a voice that carried both resolve and hope. As the marauders clashed against the gates, she led a counterattack that turned the tide. Her <strong>b</strong>lade ignited with righteous fire, scattering the invaders and securing victory for Nawamreh. Her name would forever <strong>b</strong>e etched in the annals of the realm.' 
     },
 
     // Mage stories (10-12)
@@ -494,7 +610,7 @@
 
         image: 'mage3.jpg', 
         title : 'Weaver of Fate',
-        text: 'With the Scroll\'s power, she discovered the rift—a swirling vortex connecting Nawamreh to the Abyss. If left unchecked, it would consume the realm. The Mage, channeling the Scroll\'s energies, began the intricate spell to seal the rift. The process was grueling, her strength waning as the rift fought back with chaotic energy. With one final incantation, the rift collapsed, and peace returned to the realm. The Scroll dimmed, its purpose fulfilled, but its legacy lived on in her name as the Weaver of Fate.' 
+        text: 'With the Scroll\'s power, she discovered the rift—a swirling vortex connecting Nawamreh to the Abyss. If left unchecked, it would consume the realm. The Mage, channeling the Scroll\'s energies, began the intricate spell to seal the rift. The process was grueling, her strength waning as the rift fought back with chaotic energy. With one final incantation, the rift collapsed, and peace returned to the re<strong>a</strong>lm. The Scroll dimmed, its purpose fulfilled, but its leg<strong>a</strong>cy lived on in her n<strong>a</strong>me as the Weaver of Fate.' 
     },
 
     // Cleric stories (13-15)
@@ -511,18 +627,18 @@
     { 
         image: 'cleric3.jpg', 
         title : 'Hope’s Embrace',
-        text: 'With the Luminara Bloom in hand, she returned to the battlefield. The sight of the wounded stirred her resolve as she raised her staff high. A wave of healing energy radiated from her, mending broken bones, closing wounds, and reviving the fallen. Her efforts turned the tide of battle, and the enemy fled before the united strength of Nawamreh\'s forces. The Cleric\'s light had not only healed bodies but rekindled the spirit of the realm.' 
+        text: 'With the Luminara Bloom in hand, she returned to the battlefield. The sight of the wounded stirred her resolve as she raised her staff high. A wave of healing energy radiated from her, mending broken bones, closing wounds, and reviving the fallen. Her efforts turned the tide of battle, and the enemy fled before the united strength of Nawamreh\'s forces. The Cleric\'s <strong>l</strong>ight had not only hea<strong>l</strong>ed bodies but rekind<strong>l</strong>ed the spirit of the realm.' 
     },
 
     // Archer stories (16-18)
     { image: 'archer1.jpg', title : "The Watchful Eye",  text: "High in the emerald canopy of Nawamreh’s sacred forest, the Archer kept a vigilant watch. Her eyes, sharp as the hawks that flew beside her, could detect even the faintest disturbance in the dense wilderness. When whispers of invaders reached her ears, she climbed to the tallest tree, her bow ready, and her quiver filled with enchanted arrows. From her vantage point, she saw shadows creeping along the edges of the sacred grove. With a soft breath, she loosed her first arrow. It flew true, piercing the heart of an intruder and sending a clear warning: Nawamreh was not defenseless." },
     { image: 'archer2.jpg', title : "The Arrow of Judgment", text: "The invaders returned in greater numbers, their leader determined to claim the groves for their own dark purposes. But the Archer, unshaken, prepared a single, enchanted arrow—the Arrow of Reckoning—crafted with the blessings of the forest’s spirits. As the enemy commander rallied his troops, she drew the string of her bow, whispering a prayer to the spirits of Nawamreh. The arrow shimmered with light as it flew across the battlefield, striking the commander and releasing an explosion of radiant energy that scattered his forces. The forest was safe, at least for now." },
-    { image: 'archer3.jpg', title : "Warden of the Wilds", text: "In the aftermath of the battle, the Archer turned her attention to the creatures of the forest, forging alliances with the wolves, hawks, and even the elusive shadow cats. Together, they became a united force, ready to defend Nawamreh against any threat. Under her guidance, the creatures of the forest began to thrive, their habitats restored and protected. Legends spread of a mysterious warden who could command the very beasts of the wild, and her name became a symbol of harmony between nature and its protectors." },
+    { image: 'archer3.jpg', title : "Warden of the Wilds", text: "In the aftermath of the battle, the Archer turned her attention to the creatures of the forest, forging alliances with the wolves, hawks, and even the elusive shadow cats. Together, they became a united force, ready to defend Nawamreh against any threat. Under her guidance, the creatures of the forest began to thrive, their habitats restored and protected. Legends spread of a myster<strong>i</strong>ous warden who could command the very beasts of the w<strong>i</strong>ld, and her name became a symbol of harmony between nature and <strong>i</strong>ts protectors." },
 
     // Bard stories (19-21)
     { image: 'bard1.jpg', title : "The Song of Awakening", text: "Deep in a forgotten cavern, surrounded by ancient relics, the Bard strummed her lute with trembling fingers. The melodies she played weren’t her own; they were passed down through the echoes of Nawamreh’s history. As the final note resonated, the relics pulsed with energy, their dormant magic coming alive. Light filled the cavern, illuminating carvings of an age long past. She smiled softly—her music had awakened the heart of Nawamreh, restoring hope to a realm on the brink of despair." },
     { image: 'bard2.jpg', title : "The Melody of Battle", text: "On the eve of battle, when morale was at its lowest, the Bard climbed a ridge overlooking the camp. Her voice, steady and unwavering, sang the Hymn of the Unbroken, a melody infused with the strength of Nawamreh itself. Soldiers stirred from their tents, their fears replaced by a fiery determination. As the hymn swelled, a visible wave of energy rippled through the camp, binding the soldiers in unshakable resolve. When the enemy arrived, they were met with a force that fought not for survival but for the soul of their realm." },
-    { image: 'bard3.jpg', title : "Echoes of Eternity", text: "Years after the war ended, the Bard’s songs continued to shape the lives of those who heard them. In every corner of Nawamreh, her melodies brought hope to the hopeless, joy to the weary, and unity to the divided. Children learned her ballads, travelers carried her tales, and elders spoke of the day her music turned the tide of destiny. Her legacy became more than her songs; it became the soul of Nawamreh itself, a reminder that even in the darkest times, the voice of hope would never be silenced." }
+    { image: 'bard3.jpg', title : "Echoes of Eternity", text: "Years after the war ended, the Bard’s songs continued to shape the lives of those who heard them. In every corner of Nawamreh, her melodies brought hope to the hopeless, joy to the weary, and unity to the divided. Children learned her ballads, travelers carried her tales, and elders spo<strong>k</strong>e of the day her music turned the tide of destiny. Her legacy became more than her songs; it became the soul of Nawamreh itself, a reminder that even in the dar<strong>k</strong>est times, the voice of hope would never be silenced." }
 ];
 
 
@@ -554,12 +670,39 @@ const homeBtn = newContainer.querySelector('#home-btn');
 
 // Update story content based on index
 function updateStory(index) {
-    storyTitle.textContent = currentRoleStories[index].title;
-    storyImage.src = currentRoleStories[index].image;
-    storyText.textContent = currentRoleStories[index].text;
+    // Add fade-out effect before updating content
+    storyImage.classList.add('fade-out');
+    storyText.classList.add('fade-out');
+    storyTitle.classList.add('fade-out');
+
+    // Wait for the fade-out effect to complete
+    setTimeout(() => {
+        // Update content
+        storyTitle.textContent = currentRoleStories[index].title;
+        storyImage.src = currentRoleStories[index].image;
+        storyText.innerHTML = currentRoleStories[index].text;
+
+        // Adjust font size for bolded <strong> elements
+        const strongElements = storyText.querySelectorAll('strong');
+        strongElements.forEach((strong) => {
+            strong.style.fontSize = "1.5em"; // Adjust size
+            strong.style.color = "red"; // Optional: Add color
+        });
+
+        // Apply fade-in effect after updating content
+        storyImage.classList.remove('fade-out');
+        storyText.classList.remove('fade-out');
+        storyTitle.classList.remove('fade-out');
+        storyImage.classList.add('fade-in', 'mystical-border');
+        storyText.classList.add('fade-in');
+        storyTitle.classList.add('fade-in');
+    }, 500); // Matches the CSS fade-out duration
+
+    // Update navigation button visibility
     prevBtn.classList.toggle('hidden', index === 0);
     nextBtn.classList.toggle('hidden', index === currentRoleStories.length - 1);
 }
+
 
 // Navigation button event listeners
 prevBtn.addEventListener('click', () => {
