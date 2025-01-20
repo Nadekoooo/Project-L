@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Nawamreh Credits</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Crimson+Pro:ital,wght@0,400;0,700;1,400&display=swap"
+    rel="stylesheet"
+  >
+  <style>
+    body {
+      font-family: 'Cinzel', serif;
+      background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+                  url('background.jpg') no-repeat center center fixed;
+      background-size: cover;
+      color: #f7fafc;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    h1 {
+      text-shadow: 0 4px 8px rgba(0, 0, 0, 0.8);
+    }
+
+    button {
+      transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    }
+    button:hover {
+      transform: scale(1.1);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
+    }
+
+    .main-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+      max-width: 1000px;
+      background: rgba(0, 0, 0, 0.8);
+      border: 2px solid #d4af37;
+      border-radius: 16px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
+      overflow: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Main Container for Credits Content -->
+  <div class="main-container space-y-6 text-yellow-300">
+    <h1 class="text-4xl font-bold text-center mt-4">Credits</h1>
+    <p class="text-lg italic text-center">
+      Thanks for reaching this page; you truly are the chosen one.
+    </p>
+
+    <div class="mt-6 space-y-4">
+      <h2 class="text-2xl font-bold text-center">Acknowledgements</h2>
+      <ul class="list-disc list-inside text-left text-yellow-200 mx-auto max-w-xl">
+        <li>
+          <strong>Storyboard &amp; Concept:</strong> The one and only Nadekoooo
+        </li>
+        <li>
+          <strong>Code &amp; Development:</strong> 3 days of sleepless dedication
+        </li>
+        <li>
+          <strong>Soundtrack Inspiration:</strong> Yakusoku no Neverland &amp; Yu Peng Chen
+        </li>
+        <li>
+          <strong>Inspiration:</strong> My amazing girlfriend, who inspired all the roles and characters
+        </li>
+      </ul>
+    </div>
+
+    <div class="mt-6 space-y-4">
+      <h2 class="text-2xl font-bold text-center">Roles and Their Meanings</h2>
+      <ul class="list-disc list-inside text-left text-yellow-200 mx-auto max-w-xl">
+        <li><strong>Paladin:</strong> A symbol of unwavering faith and protection.</li>
+        <li><strong>Assassin:</strong> Precision, strategy, and the quiet resolve to act in shadows.</li>
+        <li><strong>Warrior:</strong> Commitment to strength, leadership, and courage in battle.</li>
+        <li><strong>Mage:</strong> Wisdom, creativity, and the power of knowledge.</li>
+        <li><strong>Cleric:</strong> Compassion, healing, and the light of hope.</li>
+        <li><strong>Archer:</strong> Patience, accuracy, and harmony with nature.</li>
+        <li><strong>Bard:</strong> Inspiration, storytelling, and the unity of shared experiences.</li>
+      </ul>
+    </div>
+
+    <div class="mt-6 max-w-xl mx-auto text-justify leading-relaxed">
+      <p class="mb-4">
+        This tale of Nawamreh is a culmination of creativity, hard work, and relentless passion.
+        Each role reflects a unique aspect of the author's dearest gf, and together, they form the legacy of this realm.
+      </p>
+      <p class="text-center italic text-yellow-400">
+        Special thanks to my girlfriend for inspiring the roles and the characters that bring Nawamreh to life.
+      </p>
+    </div>
+
+    <div class="flex justify-center mt-4">
+      <button 
+        onclick="goBack()"
+        class="bg-yellow-500 hover:bg-yellow-600 text-black font-bold py-2 px-6 rounded-lg shadow-md transition-transform transform hover:scale-105"
+      >
+        Back
+      </button>
+    </div>
+  </div>
+
+  <script>
+    function goBack() {
+      // Optional: If you want a "Back" button that goes to a previous page or main index:
+      window.history.back();
+    }
+  </script>
+</body>
+</html>
